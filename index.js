@@ -67,7 +67,12 @@ function menu() {
         console.log(" ");
         console.log(" ");
 
-        let taskNumber = Number(readline.question("-> "));
+        let taskNumber = readline.question("-> ");
+        if(taskNumber.split('').length < 2){
+            if(taskNumber || taskNumber === '0') taskNumber = Number(taskNumber);
+        }else{
+            taskNumber = null;
+        };
 
         switch (taskNumber) {
             case 1:
@@ -87,7 +92,6 @@ function menu() {
                             console.log("   " + list[i][j]);
                         };
                     };
-
                 };
                 break;
             case 0:
@@ -98,14 +102,12 @@ function menu() {
                 break;
         };
         if (loopKey) {
-            console.log("")
-            console.log("")
-            console.log("")
+            for(let i = 0; i < 2; i++) console.log("");
             readline.question("<ENTER - VOLTAR AO MENU> ");
         };
 
     } while (loopKey);
-}
+};
 
 
 menu();
