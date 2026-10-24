@@ -69,9 +69,7 @@ function menu() {
 
         let taskNumber = readline.question("-> ");
         if(taskNumber.split('').length < 2){
-            if(taskNumber || taskNumber === '0') taskNumber = Number(taskNumber);
-        }else{
-            taskNumber = null;
+            if(taskNumber || taskNumber === "0") taskNumber = Number(taskNumber);
         };
 
         switch (taskNumber) {
@@ -102,7 +100,7 @@ function menu() {
                 break;
         };
         if (loopKey) {
-            for(let i = 0; i < 2; i++) console.log("");
+            for(let i = 0; i < 2; i++) console.log(""); 
             readline.question("<ENTER - VOLTAR AO MENU> ");
         };
 
