@@ -55,8 +55,12 @@ function completedTask() {
         for (let i = 0; i < tasks.length; i++) {
             if (tasks[i]["id"] === idTask) {
                 key = true;
+                if(tasks[i]["completed"] === true){
+                    console.log("ESTÁ TAREFA 'JÁ FOI MARCADA' COMO CONCLUÍDA");
+                    break;
+                };
                 tasks[i]["completed"] = key;
-                console.log("A TAREFA FOI MARCADA COM CONCLUÍDA!");
+                console.log("A TAREFA ACABA DE SER MARCADA COMO CONCLUÍDA!");
                 break;
             };
         };
