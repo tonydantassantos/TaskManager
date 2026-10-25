@@ -3,8 +3,6 @@
 let readline = require('readline-sync');
 const tasks = [];
 
-
-
 function listTasks() {
     const list = [];
     for (let i = 0; i < tasks.length; i++) {
@@ -14,37 +12,37 @@ function listTasks() {
             taskNow.title,
             taskNow.description,
             taskNow.completed ? "Completo" : "Pendente"
-        ])
+        ]);
 
-    }
+    };
     return list;
 };
 
-
-
 function taskCreate() {
     console.clear();
-    let taskName = readline.question("Tarefa: ");
-    let taskDescription = readline.question("Descricao: ");
-    if (taskName.length === 0 && taskDescription.length === 0) {
-        console.log("O campo tarefa e o campo descrição se encontram vazios.")
-        console.log("Para criar uma tarefa todos os campos devem estar preechidos.")
-        console.log("")
-        console.log("")
-        readline.question("<ENTER - TENTAR NOVAMENTE ");
-        taskCreate();
-    } else {
-        tasks.push({
-            id: tasks.length + 1,
-            title: taskName,
-            description: taskDescription,
-            completed: false,
-        });
-
-        console.clear();
-        console.log(`A TAREFA FOI ADICIONADA A LISTA!`);
-    }
-
+    let question = readline.question("Digite 'S/s' se deseja continuar: ");
+    if(question === 'S' || question === 's'){
+        let taskName = readline.question("Tarefa: ");
+        let taskDescription = readline.question("Descricao: ");
+        if (taskName.length === 0 && taskDescription.length === 0) {
+            console.log("O campo tarefa e o campo descrição se encontram vazios.");
+            console.log("Para criar uma tarefa todos os campos devem estar preechidos.");
+            console.log("");
+            console.log("");
+            readline.question("<ENTER - TENTAR NOVAMENTE ");
+            taskCreate();
+        } else {
+            tasks.push({
+                id: tasks.length + 1,
+                title: taskName,
+                description: taskDescription,
+                completed: false,
+            });
+    
+            console.clear();
+            console.log(`A TAREFA FOI ADICIONADA A LISTA!`);
+        };
+    };
 };
 
 function completedTask() {
@@ -52,7 +50,7 @@ function completedTask() {
         let key = false;
         let list = listTasks();
         listFormatting(list);
-        for(let i = 0; i < 2; i++)console.log("");
+        for (let i = 0; i < 2; i++)console.log("");
         let idTask = Number(readline.question("ID da tarefa: "));
         for (let i = 0; i < tasks.length; i++) {
             if (tasks[i]["id"] === idTask) {
@@ -62,12 +60,41 @@ function completedTask() {
                 break;
             };
         };
-        if (!key) console.log("ID incorreto!")
-    }else console.log("Não há tarefas criadas.")
+        if (!key) console.log("O id fornecido nao foi encontrado!");
+    } else console.log("Lista vazia.");
 };
 
-
-
+function deleteTask() {
+    if (tasks.length > 0) {
+        let key = false;
+        let list = listTasks();
+        listFormatting(list);
+        for (let i = 0; i < 2; i++)console.log("");
+        let idTask = Number(readline.question("ID da tarefa: "));
+        for (let i = 0; i < tasks.length; i++) {
+            if (tasks[i]["id"] === idTask) {
+                key = true;
+                let index = tasks[i];
+                for (let j = i + 1; j < tasks.length; j++) {
+                    if (index !== tasks.length - 1) {
+                        const temp = tasks[j];
+                        tasks[j] = index;
+                        tasks[i] = temp;
+                    };
+                };
+                tasks.pop();
+                for (let i = 0; i < tasks.length; i++) {
+                    if (tasks[i].id !== i + 1) {
+                        tasks[i]["id"] = i + 1;
+                    }
+                };
+                console.log("A TAREFA FOI EXCLUÍDA!");
+                break;
+            };
+        };
+        if (!key) console.log("O Id fornecido nao foi encontrado!")
+    } else console.log("Lista vazia.")
+};
 
 function listFormatting(list) {
     for (let i = 0; i < list.length; i++) {
@@ -82,8 +109,6 @@ function listFormatting(list) {
         };
     };
 };
-
-
 
 function menu() {
 
@@ -100,6 +125,7 @@ function menu() {
         console.log("1) Criar tarefa");
         console.log("2) Listar tarefas");
         console.log("3) Concluir tarefas");
+        console.log("4) Excluir tarefas");
         console.log("0) Sair");
 
         console.log(" ");
@@ -126,6 +152,10 @@ function menu() {
                 console.clear();
                 completedTask();
                 break;
+            case 4:
+                console.clear();
+                deleteTask();
+                break;
             case 0:
                 loopKey = false;
                 break;
@@ -137,9 +167,6 @@ function menu() {
             for (let i = 0; i < 2; i++) console.log("");
             readline.question("<ENTER - VOLTAR AO MENU> ");
         };
-
     } while (loopKey);
 };
-
-
 menu();
